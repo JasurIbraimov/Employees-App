@@ -1,0 +1,10 @@
+.list-group-item.like .btn-star {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+.list-group-item .btn-star{
+    opacity: 0;
+    transform: translateX(100%);
+    transition: 0.5s all ease-in-out;
+}
