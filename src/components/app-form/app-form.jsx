@@ -21,7 +21,7 @@ function AppForm({createEmployee, openModal}) {
             <h3>Добавьте нового сотрудника</h3>
             <form className="add-form d-flex" onSubmit={onFormSubmit}>
                 <input ref={nameRef} type="text" className="form-control" placeholder="Как его зовут?"/>
-                <input ref={salaryRef} type="number" className="form-control" placeholder="З/П в $?"/>
+                <input min="100" ref={salaryRef} type="number" className="form-control" placeholder="З/П в $?"/>
                 <button className="btn btn-outline-light" type="submit">Добавить</button>
             </form>
         </div>

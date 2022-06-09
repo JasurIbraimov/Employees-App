@@ -10,73 +10,7 @@ import AppModal from '../app-modal/app-modal';
 
 
 function App() {
-    const [employees, setEmployees] = useState([
-        {
-            employeeName: "Mark Specter",
-            employeeSalary: 1000,
-            increase: true,
-        },
-        {
-            employeeName: "Steven Grant",
-            employeeSalary: 2000,
-            increase: false,
-        },
-        {
-            employeeName: "Jack Lockley",
-            employeeSalary: 3000,
-            increase: true,
-        },
-        {
-            employeeName: "Steven Grant",
-            employeeSalary: 2000,
-            increase: false,
-        },
-        {
-            employeeName: "Jack Lockley",
-            employeeSalary: 3000,
-            increase: true,
-        },
-        {
-            employeeName: "Steven Grant",
-            employeeSalary: 2000,
-            increase: false,
-        },
-        {
-            employeeName: "Jack Lockley",
-            employeeSalary: 3000,
-            increase: true,
-        },
-        {
-            employeeName: "Steven Grant",
-            employeeSalary: 2000,
-            increase: false,
-        },
-        {
-            employeeName: "Jack Lockley",
-            employeeSalary: 3000,
-            increase: true,
-        },
-        {
-            employeeName: "Steven Grant",
-            employeeSalary: 2000,
-            increase: false,
-        },
-        {
-            employeeName: "Jack Lockley",
-            employeeSalary: 3000,
-            increase: true,
-        },
-        {
-            employeeName: "Steven Grant",
-            employeeSalary: 2000,
-            increase: false,
-        },
-        {
-            employeeName: "Jack Lockley",
-            employeeSalary: 3000,
-            increase: true,
-        }
-    ])
+    const [employees, setEmployees] = useState([])
     const [modal, setModal] = useState({
         opened: false, 
         title: "",
@@ -88,6 +22,7 @@ function App() {
             const employee = {
                 employeeName: employeeName,
                 employeeSalary: employeeSalary,
+                increase: false
             }
             setEmployees((employees) => ([...employees, employee]));    
         } else {
@@ -117,7 +52,7 @@ function App() {
     return (
         <div className='container-lg'> 
             <header className='mt-3'>
-                <AppStats /> 
+                <AppStats employeesToIncrease={0} employeesTotalCount={employees.length} /> 
             </header>
             <main>
                 <section className='bg-secondary mt-3 p-3 shadow rounded-3 text-white'>
