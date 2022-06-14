@@ -1,22 +1,20 @@
 import Employee from '../employee/employee';
 import './employees.css';
 function Employees({employees, toggleEmployeeBooleanData, fireEmployee}) {
-    const likeEmployee = (index) => toggleEmployeeBooleanData("like", index)
-    const increaseEmployee = (index) => toggleEmployeeBooleanData("increase", index)
-    const generateUniqueKey = (employeeName) => employeeName + +new Date() 
+    const likeEmployee = (id) => toggleEmployeeBooleanData("like", id)
+    const increaseEmployee = (id) => toggleEmployeeBooleanData("increase", id)
     return (
         <ul className='list-group employees-list mt-3'>
-            {employees.map((employee, index)=> {
-                const key = generateUniqueKey(employee.employeeName);
-                return <Employee 
-                    {...employee} 
-                    index={index} 
+            {employees.map(({id, ...employeeData}) => (
+                <Employee 
+                    {...employeeData} 
+                    id={id} 
                     likeEmployee={likeEmployee}
                     increaseEmployee={increaseEmployee}
                     fireEmployee={fireEmployee}
-                    key={key}
+                    key={id}
                 />
-            })}
+            ))}
 
         </ul>
     )

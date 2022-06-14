@@ -28,12 +28,13 @@ class App extends Component {
       ) === -1
     ) {
       const employee = {
-        employeeName: employeeName,
-        employeeSalary: employeeSalary,
+        employeeName,
+        employeeSalary,
         increase: false,
         like: false,
+        id: employeeName + +new Date()
       };
-      this.setState({ employees: [...this.state.employees, employee] });
+      this.setState(({employees}) => ({employees: [...employees, employee]}));
     } else {
       this.handleModal(
         true,
@@ -47,15 +48,19 @@ class App extends Component {
     this.setState({ modal: { opened, title, content } });
   };
 
-  toggleEmployeeBooleanData = (booleanDataName, index) => {
-    const employeeToIncrease = this.state.employees[index];
-    employeeToIncrease[booleanDataName] = !employeeToIncrease[booleanDataName];
-    this.setState({ employees: [...this.state.employees] });
+  toggleEmployeeBooleanData = (booleanDataName, id) => {
+    this.setState(({employees}) => {
+      const employeeIndex = employees.findIndex(employee => employee.id === id);
+      employees[employeeIndex][booleanDataName] = !employees[employeeIndex][booleanDataName]
+      return {employees}
+    })
+    
   };
 
-  fireEmployee = (index) => {
-    this.state.employees.splice(index, 1);
-    this.setState({ employees: [...this.state.employees] });
+  fireEmployee = (id) => {
+    this.setState(({employees}) => {
+      return { employees: employees.filter(employee => employee.id !== id) }
+    });
   };
 
   render() {

@@ -5,7 +5,7 @@ function Employee({
   increase,
   like,
   increaseEmployee,
-  index,
+  id,
   fireEmployee,
   likeEmployee,
 }) {
@@ -19,7 +19,7 @@ function Employee({
       )}
     >
       <span
-        onClick={() => likeEmployee(index)}
+        onClick={() => likeEmployee(id)}
         className={setIncreased("list-group-item-label")}
       >
         {employeeName}
@@ -31,7 +31,7 @@ function Employee({
       />
       <div className="d-flex justify-content-center align-items-center">
         <button
-          onClick={() => increaseEmployee(index)}
+          onClick={() => increaseEmployee(id)}
           type="button"
           className="btn-cookie btn-light text-warning btn-sm btn me-3"
         >
@@ -40,7 +40,7 @@ function Employee({
         <button
           type="button"
           className="btn-trash btn-light text-danger btn-sm btn me-3"
-          onClick={() => fireEmployee(index)}
+          onClick={() => fireEmployee(id)}
         >
           <i className="fas fa-trash"></i>
         </button>
