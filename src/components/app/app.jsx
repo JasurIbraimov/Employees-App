@@ -1,78 +1,96 @@
-import { useState } from 'react';
+import { Component } from "react";
 
 // Components
-import AppFilter from '../app-filter/app-filter';
-import AppForm from '../app-form/app-form';
-import AppStats from '../app-stats/app-stats'
-import Employees from '../employees/employees';
-import SearchPanel from '../search-panel/search-panel';
-import AppModal from '../app-modal/app-modal';
+import AppFilter from "../app-filter/app-filter";
+import AppForm from "../app-form/app-form";
+import AppStats from "../app-stats/app-stats";
+import Employees from "../employees/employees";
+import SearchPanel from "../search-panel/search-panel";
+import AppModal from "../app-modal/app-modal";
 
-
-function App() {
-    const [employees, setEmployees] = useState([])
-    const [modal, setModal] = useState({
-        opened: false, 
+class App extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      employees: [],
+      modal: {
+        opened: false,
         title: "",
-        content: ""
-    });
+        content: "",
+      },
+    };
+  }
 
-    function createEmployee(employeeName, employeeSalary) {
-        if (employees.findIndex(employee => employee.employeeName === employeeName) === -1) {
-            const employee = {
-                employeeName: employeeName,
-                employeeSalary: employeeSalary,
-                increase: false
-            }
-            setEmployees((employees) => ([...employees, employee]));    
-        } else {
-            openModal("Ошибка!", "Такой пользователь уже есть в списке!")
-        }
-        
+  createEmployee = (employeeName, employeeSalary) => {
+    if (
+      this.state.employees.findIndex(
+        (employee) => employee.employeeName === employeeName
+      ) === -1
+    ) {
+      const employee = {
+        employeeName: employeeName,
+        employeeSalary: employeeSalary,
+        increase: false,
+        like: false,
+      };
+      this.setState({ employees: [...this.state.employees, employee] });
+    } else {
+      this.handleModal(
+        true,
+        "Ошибка!",
+        "Такой пользователь уже есть в списке!"
+      );
     }
+  };
 
-    function closeModal() {
-        setModal({opened: false, title:"", content: ""})
-    }
+  handleModal = (opened, title, content) => {
+    this.setState({ modal: { opened, title, content } });
+  };
 
-    function openModal(title, content) {
-        setModal({opened: true, title, content})
-    }
+  toggleEmployeeBooleanData = (booleanDataName, index) => {
+    const employeeToIncrease = this.state.employees[index];
+    employeeToIncrease[booleanDataName] = !employeeToIncrease[booleanDataName];
+    this.setState({ employees: [...this.state.employees] });
+  };
 
-    function increaseEmployee(index, increase) {
-        const employeeToIncrease = employees[index]
-        employeeToIncrease.increase = increase
-        setEmployees([...employees])
-    }
+  fireEmployee = (index) => {
+    this.state.employees.splice(index, 1);
+    this.setState({ employees: [...this.state.employees] });
+  };
 
-    function fireEmployee(index) {
-        employees.splice(index, 1);
-        setEmployees([...employees])
-    }
+  render() {
+    const { employees, modal } = this.state;
     return (
-        <div className='container-lg'> 
-            <header className='mt-3'>
-                <AppStats employeesToIncrease={0} employeesTotalCount={employees.length} /> 
-            </header>
-            <main>
-                <section className='bg-secondary mt-3 p-3 shadow rounded-3 text-white'>
-                    <SearchPanel />
-                    <AppFilter />
-                </section>
-                <section className='shadow'>
-                    <Employees 
-                        employees={employees} 
-                        fireEmployee={fireEmployee}
-                        increaseEmployee={increaseEmployee}/>
-                </section>
-            </main>
-            <footer>
-                <AppForm createEmployee={createEmployee} openModal={openModal} />
-            </footer>
-            {modal.opened && <AppModal title={modal.title} closeModal={closeModal} content={modal.content}/>}
-        </div>
-    )
-};
-
+      <div className="container-lg">
+        <header className="mt-3">
+          <AppStats
+            employeesToIncrease={0}
+            employeesTotalCount={employees.length}
+          />
+        </header>
+        <main>
+          <section className="bg-secondary mt-3 p-3 shadow rounded-3 text-white">
+            <SearchPanel />
+            <AppFilter />
+          </section>
+          <section className="shadow">
+            <Employees
+              employees={employees}
+              toggleEmployeeBooleanData={this.toggleEmployeeBooleanData}
+              fireEmployee={this.fireEmployee}
+            />
+          </section>
+        </main>
+        <footer>
+          <AppForm
+            createEmployee={this.createEmployee}
+            handleModal={this.handleModal}
+          />
+        </footer>
+        {modal.opened && <AppModal {...modal} handleModal={this.handleModal} />}
+      </div>
+    );
+  }
+}
 
 export default App;
