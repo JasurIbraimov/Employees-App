@@ -1,8 +1,9 @@
-import "./app-modal.css";
+import "./app-modal.scss";
+
 function AppModal({ title, content, handleModal }) {
     const closeModal = () => handleModal(false, "", "");
     return (
-        <div className="modal app-modal" tabIndex="-1">
+        <div className="modal app-modal" role="alert" tabIndex="-1">
             <div className="modal-dialog">
                 <div className="modal-content">
                     <div className="modal-header">

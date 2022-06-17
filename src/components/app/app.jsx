@@ -168,6 +168,11 @@ class App extends Component {
                     (employee) => employee.employeeSalary > 1000
                 );
                 break;
+            case filters.FILTER_BY_LIKED:
+                correctEmployees = employees.filter(
+                    (employee) => employee.like
+                );
+                break;
             default:
                 correctEmployees = employees;
                 break;
@@ -188,13 +193,13 @@ class App extends Component {
         const correctEmployees = this.showCorrectEmployees();
         return (
             <div className="container-lg">
-                <header className="mt-3">
+                <header role="banner" className="mt-3">
                     <AppStats
                         employeesToIncrease={this.countIncreasedEmployees()}
                         employeesTotalCount={employees.length}
                     />
                 </header>
-                <main>
+                <main role="contentinfo">
                     <section className="bg-secondary mt-3 p-3 shadow rounded-3 text-white">
                         <SearchPanel
                             setSearchingLetters={this.setSearchingLetters}
